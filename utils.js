@@ -79,5 +79,12 @@ const validateCart = () => {
 
 const cartTotal = () => {
   // should return the total cost of all items in cart
-  return shoppingCart.sum(item => item.price)
+  return shoppingCart.reduce((total, item) => total + item.price, 0)
+}
+
+module.exports = {
+  sayHello, area, perimeter, circleArea,
+  clearCart, createItem, getShoppingCart, addItemToCart,
+  getNumItemsInCart, removeItemFromCart, updateCart,
+  validateCart, cartTotal
 }

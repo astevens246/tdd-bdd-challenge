@@ -69,20 +69,66 @@ it("Should create a new (object) Item with name and price", function() {
   expect(item).to.have.property("quantity", 1)
 })
 
-it("Should return an array containing all items in cart")
+it("Should return an array containing all items in cart", function() {
+  const shoppingCart = utils.getShoppingCart()
+  expect(shoppingCart).to.be.a("array")
+  expect(shoppingCart.length).to.equal(0)
+})
 
-it("Should add a new item to the shopping cart")
 
-it("Should return the number of items in the cart")
+it("Should add a new item to the shopping cart", function() {
+  const item = utils.createItem("apple", 0.99)
+  utils.addItemToCart(item)
+  const shoppingCart = utils.getShoppingCart()
+  expect(shoppingCart.length).to.equal(1)
+  expect(shoppingCart[0]).to.have.property("name", "apple")
+  expect(shoppingCart[0]).to.have.property("price", 0.99)
+  expect(shoppingCart[0]).to.have.property("quantity", 1)
+})
 
-it("Should remove items from cart")
+it("Should return the number of items in the cart", function() {
+  const item = utils.createItem("apple", 0.99)
+  utils.addItemToCart(item)
+  const numItems = utils.getNumItemsInCart()
+  expect(numItems).to.be.a("number")
+  expect(numItems).to.equal(1)
+})
+
+it("Should remove items from cart", function() {
+  const item = utils.createItem("apple", 0.99)
+  utils.addItemToCart(item)
+  utils.removeItemFromCart(item)
+  const shoppingCart = utils.getShoppingCart()
+  expect(shoppingCart.length).to.equal(0)
+})
 
 // ========================================================
 // Stretch Challenges
 // ========================================================
 
-it("Should update the count of items in the cart")
+// I struggled with this one, also syntax was weird with the parentheses
+it("Should update the count of items in the cart", function() {
+  const item = utils.createItem("apple", 0.99)
+  utils.addItemToCart(item)
+  let numItems = utils.getNumItemsInCart()
+  expect(numItems).to.equal(1)
 
-it("Should validate that an empty cart has 0 items")
+  utils.addItemToCart(item)
+  numItems = utils.getNumItemsInCart()
+  expect(numItems).to.equal(2)
+})
 
-it("Should return the total cost of all items in the cart")
+it("Should validate that an empty cart has 0 items", function() {
+  const isValid = utils.validateCart()
+  expect(isValid).to.be.true
+})
+
+it("Should return the total cost of all items in the cart", function() {
+  const item1 = utils.createItem("apple", 0.99)
+  const item2 = utils.createItem("orange", 1.99)
+  utils.addItemToCart(item1)
+  utils.addItemToCart(item2)
+  const total = utils.cartTotal()
+  expect(total).to.be.a("number")
+  expect(total).to.equal(2.98)
+})
